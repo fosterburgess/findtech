@@ -6,6 +6,7 @@ use App\Filament\Resources\TechnologyResource\Pages;
 use App\Filament\Resources\TechnologyResource\RelationManagers;
 use App\Models\Technology;
 use Filament\Forms;
+use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -38,7 +39,7 @@ class TechnologyResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('related_links')
                     ->columnSpanFull(),
-                Forms\Components\TagsInput::make('tags'),
+                SpatieTagsInput::make('tags'),
                 Forms\Components\TextInput::make('status')
                     ->maxLength(255),
             ]);
