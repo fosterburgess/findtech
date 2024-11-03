@@ -1,0 +1,5 @@
+#!/bin/bash
+docker compose -f docker-compose.yml up -d;
+./scripts/storagesetup.sh;
+time docker compose exec app bash -c 'export PHP_IDE_CONFIG="serverName=Docker"; /app/vendor/bin/pest';
+

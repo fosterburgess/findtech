@@ -1,0 +1,3 @@
+#!/bin/bash
+time docker compose exec app bash -c './vendor/bin/phpstan analyse ./app --memory-limit=2G'
+

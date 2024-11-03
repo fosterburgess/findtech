@@ -1,0 +1,2 @@
+#!/bin/bash
+time docker compose exec app ./vendor/bin/pint

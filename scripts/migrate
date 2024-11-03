@@ -1,0 +1,5 @@
+#!/bin/bash
+# only copy .env.example to .env if .env does not exist
+time docker compose exec app php artisan migrate;
+time docker compose exec app php artisan optimize:clear;
+
