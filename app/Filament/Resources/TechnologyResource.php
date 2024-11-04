@@ -49,6 +49,8 @@ class TechnologyResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('case_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
