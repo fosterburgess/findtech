@@ -3,17 +3,24 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Technology;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class MainController extends Controller
 {
     public function index()
     {
-        return view('main');
+        return view('main', ['results' => new Collection(), 'spent' => null]);
+
     }
 
     public function search(Request $request)
     {
-        dd($request->get('search'));
+        $x = microtime(true);
+        $search = $request->get('search');
+        $results = Technology::search($search)->get();
+        $spent = microtime(true) - $x;
+        return view('main', ['results' => $results, 'spent' => $spent]);
     }
 }
