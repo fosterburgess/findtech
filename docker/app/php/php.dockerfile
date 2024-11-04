@@ -23,6 +23,8 @@ COPY --from=composer:2.6.6 /usr/bin/composer /usr/bin/composer
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
+RUN pecl install redis \
+    && docker-php-ext-enable redis
 
 WORKDIR /app
 
