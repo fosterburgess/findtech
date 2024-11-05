@@ -25,6 +25,7 @@ class TechnologyFactory extends Factory
             'advantages' => fake()->words(rand(80, 300), true),
             'publications' => fake()->words(rand(80, 300), true),
             'related_links' => fake()->words(rand(80, 300), true),
+            'tags' => fake()->words(rand(0,6)),
         ];
     }
 }
