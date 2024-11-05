@@ -20,7 +20,6 @@ return new class extends Migration
             $table->text('advantages')->nullable();
             $table->text('publications')->nullable();
             $table->text('related_links')->nullable();
-            $table->json('tags')->nullable();
             $table->string('status')->nullable();
             $table->softDeletes();
             $table->timestamps();
