@@ -13,5 +13,6 @@ action="{{route('main.search')}}"
     @foreach($results as $result)
         <div class="text-2xl mt-2">{{$result->title}}</div>
     @endforeach
+    {{ $results->links() }}
 </form>
 @endsection
