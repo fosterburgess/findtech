@@ -10,9 +10,12 @@ action="{{route('main.search')}}"
     @if($spent)
         {{$spent}}
     @endif
+    @if($results)
     @foreach($results as $result)
         <div class="text-2xl mt-2">{{$result->title}}</div>
     @endforeach
     {{ $results->links() }}
+    @endif
+
 </form>
 @endsection

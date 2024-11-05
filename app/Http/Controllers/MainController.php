@@ -11,7 +11,7 @@ class MainController extends Controller
 {
     public function index()
     {
-        return view('main', ['results' => new Collection(), 'spent' => null]);
+        return view('main', ['results' => null, 'spent' => null]);
 
     }
 
