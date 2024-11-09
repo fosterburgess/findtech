@@ -18,7 +18,7 @@ class MainController extends Controller
     public function search(Request $request)
     {
         $x = microtime(true);
-        $search = $request->get('search');
+        $search = $request->get('search') ?? $request->query('query');
         $results = Technology::search($search)->paginate(12);
         $spent = microtime(true) - $x;
         return view('main', ['term' => $search, 'results' => $results, 'spent' => $spent]);
