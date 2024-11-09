@@ -11,22 +11,17 @@ class Technology extends Model
 {
     use HasTags, HasFactory, Searchable;
     protected $guarded = ['id'];
-//    protected $casts = [
-//        'tags' => 'array',
-//    ];
 
     public function searchableAs(): string
     {
-        return 'tech_index2';
+        return 'technology';
     }
     public function toSearchableArray(): array
     {
-        dump($this->id);dump($this->tags);
         return [
-            'id' => (int) $this->id,
             'title' => $this->title,
             'abstract' => $this->abstract,
-            'tags' => $this->tags,
+            'applications' => $this->applications,
         ];
     }
 }
