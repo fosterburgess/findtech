@@ -4,15 +4,14 @@
 action="{{route('main.search')}}"
 >
     @csrf
-    <input type="text" name="search" class="border-4 text-2xl "/>
-    <br/>
-    <input type="submit" class="btn btn-blue">Search</input>
-    @if($spent)
-        {{$spent}}
-    @endif
+    <input type="text" name="search"
+           value="{{$term ?? ''}}"
+           class="border-2 mt-2 py-1 px-2 text-2xl "/>
+
+    <button type="submit" class="btn btn-green">Search</button>
     @if($results)
     @foreach($results as $result)
-        <div class="text-2xl mt-2">{{$result->title}}</div>
+        <x-tech-result :tech="$result" />
     @endforeach
     {{ $results->links() }}
     @endif
