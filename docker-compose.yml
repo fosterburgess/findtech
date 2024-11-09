@@ -32,53 +32,9 @@ services:
             - app-network
         extra_hosts:
             - 'host.docker.internal:host-gateway'
-    tika:
-        image: apache/tika:2.9.2.1-full
-        ports:
-            - 9998:9998
-        networks:
-            - app-network
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-    meilisearch:
-        image: getmeili/meilisearch:v1.11.0
-        volumes:
-            - ./meili_data:/meili_data
-        ports:
-            - 7700:7700
-        networks:
-            - app-network
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-    redis:
-        image: redis:6
-        volumes:
-            - 'data.redis:/data'
-        networks:
-            - app-network
-        healthcheck:
-            test: [ "CMD", "redis-cli", "ping" ]
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-    supervisor:
-        image: techfind/supervisor:1.0
-        build:
-            context: ./docker/supervisor/
-            dockerfile: supervisord.dockerfile
-        tty: true
-        env_file:
-            - .env
-        working_dir: /app
-        volumes:
-            - ./:/app
-            - ./docker/supervisor:/etc/supervisor
-        networks:
-            - app-network
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
     mysql:
         image:
-            #mysql:8.0-bullseye
+          #mysql:8.0-bullseye
             arm64v8/mysql:8.0.40-oracle
         ports:
             - 3310:3306
@@ -92,24 +48,69 @@ services:
             MYSQL_PASS: techfind
         extra_hosts:
             - 'host.docker.internal:host-gateway'
-    minio:
-        image: docker.io/bitnami/minio:latest
-        ports:
-            - '9500:9000'
-            - '9501:9001'
-        networks:
-            - app-network
-        volumes:
-            - './docker/minio/minio_data:/data'
-        environment:
-            - MINIO_ROOT_USER=techfind
-            - MINIO_ROOT_PASSWORD=techfind
-            - MINIO_DEFAULT_BUCKETS=techfind
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-volumes:
-    data.redis:
-        driver: local
+
+#    tika:
+#        image: apache/tika:2.9.2.1-full
+#        ports:
+#            - 9998:9998
+#        networks:
+#            - app-network
+#        extra_hosts:
+#            - 'host.docker.internal:host-gateway'
+#    meilisearch:
+#        image: getmeili/meilisearch:v1.11.0
+#        volumes:
+#            - ./meili_data:/meili_data
+#        ports:
+#            - 7700:7700
+#        networks:
+#            - app-network
+#        extra_hosts:
+#            - 'host.docker.internal:host-gateway'
+#    redis:
+#        image: redis:6
+#        volumes:
+#            - 'data.redis:/data'
+#        networks:
+#            - app-network
+#        healthcheck:
+#            test: [ "CMD", "redis-cli", "ping" ]
+#        extra_hosts:
+#            - 'host.docker.internal:host-gateway'
+#    supervisor:
+#        image: techfind/supervisor:1.0
+#        build:
+#            context: ./docker/supervisor/
+#            dockerfile: supervisord.dockerfile
+#        tty: true
+#        env_file:
+#            - .env
+#        working_dir: /app
+#        volumes:
+#            - ./:/app
+#            - ./docker/supervisor:/etc/supervisor
+#        networks:
+#            - app-network
+#        extra_hosts:
+#            - 'host.docker.internal:host-gateway'
+#    minio:
+#        image: docker.io/bitnami/minio:latest
+#        ports:
+#            - '9500:9000'
+#            - '9501:9001'
+#        networks:
+#            - app-network
+#        volumes:
+#            - './docker/minio/minio_data:/data'
+#        environment:
+#            - MINIO_ROOT_USER=techfind
+#            - MINIO_ROOT_PASSWORD=techfind
+#            - MINIO_DEFAULT_BUCKETS=techfind
+#        extra_hosts:
+#            - 'host.docker.internal:host-gateway'
+#volumes:
+#    data.redis:
+#        driver: local
 networks:
     app-network:
         driver: bridge
