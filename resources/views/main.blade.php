@@ -3,7 +3,10 @@
     <div class="grid grid-cols-6 gap-4">
         <div class="col-span-1">
             Left hand menu
-
+        <hr/>
+            <x-tag-menu :tags="$tags"
+                        :selectedTags="$selectedTags ?? ''"
+                        :search="$term ?? ''"/>
 
         </div>
 
