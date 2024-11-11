@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Actions\CountFacetTags;
 use App\Actions\GetTagsFromCache;
 use App\Models\Technology;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class MainController extends Controller
     {
         $tags = Session::get('tags') ?? new Collection();
         $tags->push($tag);
-        Session::put('tags', $tags);
+        Session::put('tags', $tags?->unique());
         return $this->search($request);
     }
 
@@ -50,7 +51,7 @@ class MainController extends Controller
                     }, '=', Session::get('tags')?->count() ?? 0);
             })
             ->paginate(12);
-        $selectedTags = Session::get('tags') ?? [];
+        $selectedTags = Session::get('tags')?->unique() ?? [];
         $tags = $this->getTags($search, $selectedTags);
 
         $spent = microtime(true) - $x;
@@ -61,35 +62,34 @@ class MainController extends Controller
     public function getTags(?string $search = '', Collection $selectedTags = null)
     {
         // get from cache
-        if(!$selectedTags || $selectedTags->count() === 0) {
+        if (trim($search)==='' && (!$selectedTags || $selectedTags->count() === 0)) {
             $action = new GetTagsFromCache();
             return $action();
         }
-        if($search) {
+        if ($search) {
             $builder = Technology::search($search);
             $all = $builder->query(function ($query) use ($selectedTags) {
                 return $query
-                    ->whereHas('tags', function ($query) {
-                        return $query->whereIn('tags.name->en', Session::get('tags')?->unique() ?? []);
+                    ->whereHas('tags', function ($query) use ($selectedTags) {
+                        return $query->whereIn('tags.name->en', $selectedTags?->toArray() ?? []);
                     }, '=', $selectedTags?->count() ?? 0);
             })->get();
         } else {
-            $all = Technology::query(function ($query) use ($selectedTags) {
-                return $query
-                    ->whereHas('tags', function ($query) {
-                        return $query->whereIn('tags.name->en', Session::get('tags')?->unique() ?? []);
-                    }, '=', $selectedTags?->count() ?? 0);
-            })->get();
+            $all = Technology::query()
+                    ->whereHas('tags', function ($query) use ($selectedTags) {
+                        return $query->whereIn('tags.name->en', $selectedTags?->unique() ?? []);
+                    }) // , '=', $selectedTags?->count() ?? 0)
+            ->get();
+
+
 //                ->withCount('technologies')->get();
         }
 
+        $techIds = $all->pluck('id');
         $tags = $all->pluck('tags')->flatten()->unique();
         $tagIds = $tags->pluck('id');
-//        dd($tagIds);
-//        dd($tags->first());
-        return $tags->toArray();
-        dd($tags);
-dd($all->pluck('tags')->flatten()->unique()
-    ->map(fn($item) => $item->name));
+        $cft = new CountFacetTags();
+        $tags = $cft($tagIds->unique()->toArray(), $techIds->toArray());
+        return $tags;
     }
 }
