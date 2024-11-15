@@ -18,6 +18,13 @@ class TechnologyFactory extends Factory
     {
         $az = range('a', 'z');
 
+        $tags = [];
+        for($x=1; $x<=24; $x++) {
+            $tags[] = "tag-{$x}";
+        }
+
+        shuffle($tags);
+
         return [
             'title' => fake()->words(rand(8, 30), true),
             'case_number' => implode('', fake()->randomElements($az, rand(2, 5))).'-'.rand(100, 99999),
@@ -26,7 +33,7 @@ class TechnologyFactory extends Factory
             'advantages' => fake()->words(rand(80, 300), true),
             'publications' => fake()->words(rand(80, 300), true),
             'related_links' => fake()->words(rand(80, 300), true),
-            'tags' => fake()->words(rand(0, 6)),
+            'tags' => collect($tags)->take(rand(1,5))->toArray(),
         ];
     }
 }
