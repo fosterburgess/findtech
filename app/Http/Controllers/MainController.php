@@ -52,7 +52,7 @@ class MainController extends Controller
                     }, '=', Session::get('tags')?->count() ?? 0);
             })
             ->paginate(12);
-        $selectedTags = Session::get('tags')?->unique() ?? [];
+        $selectedTags = Session::get('tags')?->unique() ?? new Collection();
         $tags = $this->getTags($search, $selectedTags);
 
         $spent = microtime(true) - $x;
