@@ -9,13 +9,15 @@ use Spatie\Tags\HasTags;
 
 class Technology extends Model
 {
-    use HasTags, HasFactory, Searchable;
+    use HasFactory, HasTags, Searchable;
+
     protected $guarded = ['id'];
 
     public function searchableAs(): string
     {
         return 'technology';
     }
+
     public function toSearchableArray(): array
     {
         return [

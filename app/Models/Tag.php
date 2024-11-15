@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Laravel\Scout\Searchable;
 
 class Tag extends \Spatie\Tags\Tag
 {
-    use  Searchable;
+    use Searchable;
+
     protected $table = 'tags';
+
     protected $casts = [
         'tags' => 'array',
     ];

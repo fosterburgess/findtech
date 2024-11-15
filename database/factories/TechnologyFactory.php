@@ -16,16 +16,17 @@ class TechnologyFactory extends Factory
      */
     public function definition(): array
     {
-        $az = range('a','z');
+        $az = range('a', 'z');
+
         return [
             'title' => fake()->words(rand(8, 30), true),
-            'case_number' => implode("", fake()->randomElements($az, rand(2,5)))."-".rand(100,99999),
+            'case_number' => implode('', fake()->randomElements($az, rand(2, 5))).'-'.rand(100, 99999),
             'abstract' => fake()->words(rand(80, 300), true),
             'applications' => fake()->words(rand(80, 300), true),
             'advantages' => fake()->words(rand(80, 300), true),
             'publications' => fake()->words(rand(80, 300), true),
             'related_links' => fake()->words(rand(80, 300), true),
-            'tags' => fake()->words(rand(0,6)),
+            'tags' => fake()->words(rand(0, 6)),
         ];
     }
 }

@@ -44,10 +44,10 @@ return [
 
     'queue' => env('SCOUT_QUEUE', false),
 
-//    'queue' => [
-//        'connection' => 'redis',
-//        'queue' => 'scout'
-//    ],
+    //    'queue' => [
+    //        'connection' => 'redis',
+    //        'queue' => 'scout'
+    //    ],
     /*
     |--------------------------------------------------------------------------
     | Database Transactions
@@ -139,8 +139,8 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
             'technologies' => [
-                'filterableAttributes'=> ['id', 'title', 'tags'],
-                ],
+                'filterableAttributes' => ['id', 'title', 'tags'],
+            ],
             // 'users' => [
             //     'filterableAttributes'=> ['id', 'name', 'email'],
             // ],
