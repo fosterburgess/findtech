@@ -55,7 +55,7 @@ class MainController extends Controller
         $tags = $this->getTags($search, $selectedTags);
 
         $spent = microtime(true) - $x;
-        dumP($spent);
+
         return view('main', ['tags'=>$tags, 'selectedTags' => Session::get('tags')?->unique()?->toArray() ?? [], 'term' => $search, 'results' => $results, 'spent' => $spent]);
     }
 
@@ -80,9 +80,6 @@ class MainController extends Controller
                         return $query->whereIn('tags.name->en', $selectedTags?->unique() ?? []);
                     }) // , '=', $selectedTags?->count() ?? 0)
             ->get();
-
-
-//                ->withCount('technologies')->get();
         }
 
         $techIds = $all->pluck('id');
